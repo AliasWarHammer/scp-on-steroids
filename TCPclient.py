@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from socket import *
 import sys
 import argparse
@@ -9,10 +10,11 @@ import argparse
 
 
 def my_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("scpos", help = "something")
-    parser.add_argument("-r", "--recurse", help = "recurse")
-    parser.add_argument("-e", "--exclude", help = "exclude")
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("scpos")
+    parser.add_argument("-h", "--help")
+    parser.add_argument("-r", "--recurse")
+    parser.add_argument("-e", "--exclude")
     args = parser.parse_args()
     if args.scpos == "scpos":
         print("you made it! scpos works")
@@ -20,7 +22,11 @@ def my_parser():
         print("yay again! recurse works")
     if args.exclude == "exclude":
         print("woohooooo, exlude works")
-
+    if args.help == "help":
+        with open('help.txt') as f:
+             read_data = f.read()
+             print (read_data)
+        f.close()
 my_parser()
 
 # clientSocket.send(sentence)
