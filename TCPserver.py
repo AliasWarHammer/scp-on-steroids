@@ -4,7 +4,7 @@ from socket import *
 
 def myrecurse(connectionSocket, filepath):
 	try:
-		onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+		onlyfiles = [f for f in os.listdir(filepath) if os.path.isfile(os.path.join(filepath, f))]
 	except:
 		pass
 
