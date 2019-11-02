@@ -1,0 +1,27 @@
+scpos
+
+NAME
+    scpos - secure copy on steroids (for additional functionality)
+
+SYNOPSIS
+    scpos [-h] | [-r] [-e='regex'] [IP port:]file1 [IP port:]file2
+
+DESCRIPTION
+    scpos is used to transfer file(s) from one machine to another securely. It is a clone of scp but does not use SSH under the hood. Instead, a custom encryption/decryption algorithm is used to secure data. The additional functionality provided is a way of excluding certain files while transfering a folder. SSH authentication is not required as the protocol used for file transfer is TCP.
+
+    The first argument is the source while the second argument is the destination. If the IP address is specified with a port, the source/destination is remote.
+
+    The options are as follows:
+
+    -h      To display this help menu
+    -r      To send a folder recursively
+    -e      Excludes the mentioned file(s) based on a regex (TODO)
+
+HISTORY
+    Based on scp by Timo Rinne <tri@iki.fi> and Timo Rinne <tri@iki.fi> and rsync originally by Andrew Tridgell and Paul Mackerras.
+
+AUTHORS
+    Parth Shah <parthvshah [at] gmail [dot] com>
+    Saahil Jain <saahiljain98 [at] gmail [dot] com>
+    Mithali Shashidhar <mithalishashidhar8 [at] gmail [dot] com>
+
