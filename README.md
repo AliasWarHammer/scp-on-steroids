@@ -1,9 +1,13 @@
 # scp-on-steroids
 This repository containts the files for an implementation of a modified secure copy utility.
 
+Requirements:
+- Python 3.6.8
+- Pip 9.0.1 (python 3.6)
+
 Setup:
 
-```pip3 install -r requirements.txt```
+```chmod 755 install.sh && ./install.sh```
 
 Usage:
 
