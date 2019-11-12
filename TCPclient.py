@@ -3,35 +3,61 @@ from socket import *
 import sys
 import argparse
 
-serverName = "localhost"
-serverPort = 12008
-clientSocket = socket(AF_INET, SOCK_STREAM)
-clientSocket.connect((serverName,serverPort))
-sentence = raw_input("Input lowercase sentence:")
-clientSocket.send(sentence)
-modifiedSentence = clientSocket.recv(1024)
-print(‘From Server:’, modifiedSentence)
-clientSocket.close()
-# print('Number of arguments:', len(sys.argv), 'arguments.')
-# print('Argument List:', str(sys.argv))
 
 def my_parser():
+    commandList = ["get", "post"]
     #help option
     if sys.argv[1]=="-h":
         with open('help.txt') as f:
              read_data = f.read()
              print (read_data)
         f.close()
-    if sys.argv[1]=="-r":
-        fileName = sys.argv[2]
-        #print(fileName)
-    if sys.argv[1]=="-e":
-        argLength = len(sys.argv)
-        for i in range(2,argLength):
-            print(sys.argv[i])
+        return 0,0,0
+    if sys.argv[1] in commandList:
+        if sys.argv[1]=="get":
+            # print(sys.argv)
+            if len(sys.argv)==4:
+                option = sys.argv[3]
+            else: 
+                option = 0
+            command = "get"
+            #option = sys.argv[3]
+            fileName = sys.argv[2]
+            # print(command)
+            # print(fileName)
+            # print(option)
+            return command, fileName, option
+        # if sys.argv[1]=="post":
+        #     command = "post"
+        #     #option = sys.argv[3]
+        #     fileName = sys.argv[2]
+        #     print(command)
+        #     print(fileName)
+        #     print(option)
     
+
+# serverName = "localhost"
+# serverPort = 12008
+# clientSocket = socket(AF_INET, SOCK_STREAM)
+# clientSocket.connect((serverName,serverPort))
+command, filenName, option = my_parser()
+if option==0:
+    option = ""
+if command==0:
+    exit(0)
+else:
+    print(command, filenName, option)
+
+#sentence = raw_input("Input lowercase sentence:")
+# clientSocket.send(sentence)
+# modifiedSentence = clientSocket.recv(1024)
+# print(‘From Server:’, modifiedSentence)
+# clientSocket.close()
+# print('Number of arguments:', len(sys.argv), 'arguments.')
+# print('Argument List:', str(sys.argv))
+
     
-my_parser()
+
 
 
 
