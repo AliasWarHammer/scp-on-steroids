@@ -19,7 +19,7 @@ def my_parser():
             if len(sys.argv)==4:
                 option = sys.argv[3]
             else: 
-                option = 0
+                option = ""
             command = "get"
             #option = sys.argv[3]
             fileName = sys.argv[2]
@@ -41,8 +41,6 @@ def my_parser():
 # clientSocket = socket(AF_INET, SOCK_STREAM)
 # clientSocket.connect((serverName,serverPort))
 command, filenName, option = my_parser()
-if option==0:
-    option = ""
 if command==0:
     exit(0)
 else:
