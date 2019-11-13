@@ -1,4 +1,5 @@
 import os
+import hashlib
 # import daemon
 from socket import *
 
@@ -19,6 +20,12 @@ def myrecurse(connectionSocket, filepath):
 			# connectionSocket.send(endmarker)
 	except:
 		pass
+
+def myrecurse_zip(connectionSocket, filepath):
+    hashed = hashlib.sha256(filepath.encode('utf-8'))
+	os.system("zip -r "+"./"+hashed+" "+filepath)
+	filetransfer(connectionSocket, "./"+hashed)
+	os.system.("rm -rf ./"+hashed)
 
 
 def filetransfer(connectionSocket, filename):
@@ -67,7 +74,7 @@ while 1:
 		elif option == "-r":
 			print("calling recurse function\n")
 			print("\nFolder ->", filename)
-			myrecurse(connectionSocket, filename)
+			myrecurse_zip(connectionSocket, filename)
 	elif request == "post":
 		try:
 			with open(filename, "wb") as fw:
