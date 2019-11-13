@@ -1,0 +1,2 @@
+this is a file in a folder in client called client2
+this is just an extra line for testing in client2
