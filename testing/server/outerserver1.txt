@@ -1,2 +1,0 @@
-this is a file in server called outerserver1
-this is just an extra line for testing in outerserver1

@@ -1,2 +1,0 @@
-this is a file in a folder in a folder in client called innerclient1
-this is just an extra line for testing in innerclient1

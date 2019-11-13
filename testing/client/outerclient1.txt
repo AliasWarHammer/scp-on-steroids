@@ -1,2 +1,0 @@
-this is a file in client called outerclient1
-this is just an extra line for testing in outerclient1
