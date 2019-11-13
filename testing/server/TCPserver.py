@@ -22,18 +22,19 @@ def myrecurse(connectionSocket, filepath):
 		pass
 
 def myrecurse_zip(connectionSocket, filepath):
-    hashed = hashlib.sha256(filepath.encode('utf-8'))
+	# hashed = str(hashlib.sha256(filepath.encode('utf-8')))
+	hashed = "temp"
 	os.system("zip -r "+"./"+hashed+" "+filepath)
-	filetransfer(connectionSocket, "./"+hashed)
-	os.system.("rm -rf ./"+hashed)
+	filetransfer(connectionSocket, "./"+hashed+".zip")
+	os.system("rm -rf ./"+hashed+".zip")
 
 
 def filetransfer(connectionSocket, filename):
 	try:
 		print('Opening file ', filename)
 		sendtype = "***file***"
-		connectionSocket.send(sendtype)
-		connectionSocket.send(filename)
+		# connectionSocket.send(sendtype)
+		# connectionSocket.send(filename)
 		with open(filename, 'ab+') as fa:
 			print('Opened file')
 			fa.seek(0, 0)
@@ -47,7 +48,7 @@ def filetransfer(connectionSocket, filename):
 			print("Sent file.")
 		
 		endmarker = "***file_end***"
-		connectionSocket.send(endmarker)
+		# connectionSocket.send(endmarker)
 	except:
 		pass
 
@@ -60,6 +61,7 @@ while 1:
 	connectionSocket, addr = serverSocket.accept()
 	request = connectionSocket.recv(1024)
 	request = request.decode()
+	print(request)
 	if len(request.split()) == 3:
 		request, filename, option = request.split()
 	else:
