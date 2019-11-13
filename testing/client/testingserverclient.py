@@ -1,4 +1,5 @@
 from socket import *
+import os
 import sys
 import argparse
 
@@ -36,22 +37,27 @@ else:
 # fileName = "serverfolder"
 # option = "-r"
 sentence = " ".join([command, fileName, option])
+clientSocket.send(sentence.encode())
+
 try:
-    with open(fileName, "wb") as fw:
+    with open(fileName+".zip", "wb") as fw:
         print("Receiving..")
         while True:
             print('receiving')
             data = clientSocket.recv(1024)
-            print('Received: ', data.decode('utf-8'))
+            # print('Received: ', data.decode('utf-8'))
             if not data:
                 print('Breaking from file write')
                 break
             fw.write(data)
-            print('Wrote to file', data.decode('utf-8'))
+            # print('Wrote to file', data.decode('utf-8'))
         fw.close()
         print("Received..")
+        os.system("mkdir "+fileName)
+        print("Unzipping...", "unzip ./"+fileName+".zip"+" -d "+fileName)
+        os.system("unzip ./"+fileName+".zip"+" -d "+fileName)
+        os.system("rm -rf "+filename+".zip")
 except:
     pass
-clientSocket.send(sentence.encode())
 clientSocket.close()
 
