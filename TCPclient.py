@@ -22,11 +22,11 @@ def my_parser():
                 option = ""
             command = "get"
             #option = sys.argv[3]
-            fileName = sys.argv[2]
+            IP, fileName = sys.argv[2].split(":")
             # print(command)
             # print(fileName)
             # print(option)
-            return command, fileName, option
+            return command, IP,fileName, option
         # if sys.argv[1]=="post":
         #     command = "post"
         #     #option = sys.argv[3]
@@ -40,11 +40,11 @@ def my_parser():
 # serverPort = 12008
 # clientSocket = socket(AF_INET, SOCK_STREAM)
 # clientSocket.connect((serverName,serverPort))
-command, filenName, option = my_parser()
+command, IP, filenName, option = my_parser()
 if command==0:
     exit(0)
 else:
-    print(command, filenName, option)
+    print(command, IP, filenName, option)
 
 #sentence = raw_input("Input lowercase sentence:")
 # clientSocket.send(sentence)
