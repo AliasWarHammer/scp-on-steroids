@@ -1,2 +1,0 @@
-this is a file in a folder in server called server1
-this is just an extra line for testing in server1
