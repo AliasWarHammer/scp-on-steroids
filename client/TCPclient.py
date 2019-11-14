@@ -8,7 +8,7 @@ def my_parser():
     if sys.argv[1]=="-h":
         with open('help.txt') as f:
              read_data = f.read()
-             print (read_data)
+             print(read_data)
         f.close()
         return 0,0,0
     if sys.argv[1] in commandList:
@@ -37,7 +37,7 @@ if option == "-r":
     try:
         with open(fileName+".zip", "wb") as fw:
             while True:
-                print('Receiving..')
+                print('Receiving...')
                 data = clientSocket.recv(1024)
                 if not data:
                     break
@@ -48,14 +48,14 @@ if option == "-r":
             print("Unzipping...", "unzip ./"+fileName+".zip"+" -d "+fileName)
             os.system("unzip ./"+fileName+".zip"+" -d "+fileName)
             os.system("rm -rf "+fileName+".zip")
-            print("\n")
+            print("")
     except:
         pass
 else:
     try:
         with open(fileName, "wb") as fw:
             while True:
-                print('Receiving..')
+                print('Receiving...')
                 data = clientSocket.recv(1024)
                 if not data:
                     break

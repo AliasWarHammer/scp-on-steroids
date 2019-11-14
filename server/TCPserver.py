@@ -14,14 +14,14 @@ def filetransfer(connectionSocket, filename):
 		print('Opening ', filename)
 		with open(filename, 'ab+') as fa:
 			fa.seek(0, 0)
-			print("Sending..")
+			print("Sending...")
 			while True:
 				data = fa.read(1024)
 				connectionSocket.send(data)
 				if not data:
 					break
 			fa.close()
-		print("Sent\n")
+		print("Sent")
 	except:
 		pass
 
@@ -30,7 +30,7 @@ with daemon.DaemonContext():
 	serverSocket = socket(AF_INET,SOCK_STREAM)
 	serverSocket.bind(("",serverPort))
 	serverSocket.listen(1)
-	print("The server is ready to receive")
+	print("The server is ready...")
 	while 1:
 		connectionSocket, addr = serverSocket.accept()
 		request = connectionSocket.recv(1024)
@@ -45,27 +45,21 @@ with daemon.DaemonContext():
 		print(request, filename, option)
 		if request == "get":
 			if option == 0:
-				print("calling filetransfer function\n")
 				filetransfer(connectionSocket, filename)
 			elif option == "-r":
-				print("calling recurse function\n")
-				print("\nFolder ->", filename)
+				print("\nFolder...", filename)
 				myrecurse_zip(connectionSocket, filename)
 		elif request == "post":
 			try:
 				with open(filename, "wb") as fw:
-					print("Receiving..")
+					print("Receiving...")
 					while True:
-						print('receiving')
 						data = connectionSocket.recv(1024)
-						print('Received: ', data.decode('utf-8'))
 						if not data:
-							print('Breaking from file write')
 							break
 						fw.write(data)
-						print('Wrote to file', data.decode('utf-8'))
 					fw.close()
-					print("Received..")
+					print("Received")
 			except:
 				pass
 		connectionSocket.close()
