@@ -3,6 +3,14 @@ import os
 import sys
 import argparse
 
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
+
+pr_key = RSA.import_key(open('private_pem.pem', 'r').read())
+pu_key = RSA.import_key(open('public_pem.pem', 'r').read())
+print(type(pr_key), type(pu_key))
+decrypt = PKCS1_OAEP.new(key=pr_key)
+
 def my_parser():
     commandList = ["get", "post"]
     if sys.argv[1]=="-h":
@@ -33,12 +41,17 @@ else:
     print(command, fileName, option)
 sentence = " ".join([command, fileName, option])
 clientSocket.send(sentence.encode())
+
+# key = clientSocket.recv(1024)
+# f = Fernet(key)
+
 if option == "-r":
     try:
         with open(fileName+".zip", "wb") as fw:
             while True:
                 print('Receiving...')
-                data = clientSocket.recv(1024)
+                # data = f.decrypt(clientSocket.recv(1024))
+                data = decrypt.decrypt(clientSocket.recv(1024))
                 if not data:
                     break
                 fw.write(data)
@@ -56,7 +69,9 @@ else:
         with open(fileName, "wb") as fw:
             while True:
                 print('Receiving...')
-                data = clientSocket.recv(1024)
+                data = decrypt.decrypt(clientSocket.recv(1024))
+                # data = f.decrypt(clientSocket.recv(1024))
+                # data = clientSocket.recv(1024)
                 if not data:
                     break
                 fw.write(data)

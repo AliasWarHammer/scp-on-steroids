@@ -1,2 +1,2 @@
 python-daemon
-cryptography
+pycryptodome
