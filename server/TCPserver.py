@@ -1,6 +1,6 @@
 import os
 import hashlib
-# import daemon
+import daemon
 from socket import *
 
 def myrecurse_zip(connectionSocket, filepath):
@@ -8,7 +8,6 @@ def myrecurse_zip(connectionSocket, filepath):
 	os.system("zip -r "+"./"+hashed+" "+filepath)
 	filetransfer(connectionSocket, "./"+hashed+".zip")
 	os.system("rm -rf ./"+hashed+".zip")
-
 
 def filetransfer(connectionSocket, filename):
 	try:
@@ -26,46 +25,47 @@ def filetransfer(connectionSocket, filename):
 	except:
 		pass
 
-serverPort = 12008
-serverSocket = socket(AF_INET,SOCK_STREAM)
-serverSocket.bind(("",serverPort))
-serverSocket.listen(1)
-print("The server is ready to receive")
-while 1:
-	connectionSocket, addr = serverSocket.accept()
-	request = connectionSocket.recv(1024)
-	request = request.decode()
-	print(request)
-	if len(request.split()) == 3:
-		request, filename, option = request.split()
-	else:
-		request, filename = request.split()
-		option = 0
+with daemon.DaemonContext():
+	serverPort = 12008
+	serverSocket = socket(AF_INET,SOCK_STREAM)
+	serverSocket.bind(("",serverPort))
+	serverSocket.listen(1)
+	print("The server is ready to receive")
+	while 1:
+		connectionSocket, addr = serverSocket.accept()
+		request = connectionSocket.recv(1024)
+		request = request.decode()
+		print(request)
+		if len(request.split()) == 3:
+			request, filename, option = request.split()
+		else:
+			request, filename = request.split()
+			option = 0
 
-	print(request, filename, option)
-	if request == "get":
-		if option == 0:
-			print("calling filetransfer function\n")
-			filetransfer(connectionSocket, filename)
-		elif option == "-r":
-			print("calling recurse function\n")
-			print("\nFolder ->", filename)
-			myrecurse_zip(connectionSocket, filename)
-	elif request == "post":
-		try:
-			with open(filename, "wb") as fw:
-				print("Receiving..")
-				while True:
-					print('receiving')
-					data = connectionSocket.recv(1024)
-					print('Received: ', data.decode('utf-8'))
-					if not data:
-						print('Breaking from file write')
-						break
-					fw.write(data)
-					print('Wrote to file', data.decode('utf-8'))
-				fw.close()
-				print("Received..")
-		except:
-			pass
-	connectionSocket.close()
+		print(request, filename, option)
+		if request == "get":
+			if option == 0:
+				print("calling filetransfer function\n")
+				filetransfer(connectionSocket, filename)
+			elif option == "-r":
+				print("calling recurse function\n")
+				print("\nFolder ->", filename)
+				myrecurse_zip(connectionSocket, filename)
+		elif request == "post":
+			try:
+				with open(filename, "wb") as fw:
+					print("Receiving..")
+					while True:
+						print('receiving')
+						data = connectionSocket.recv(1024)
+						print('Received: ', data.decode('utf-8'))
+						if not data:
+							print('Breaking from file write')
+							break
+						fw.write(data)
+						print('Wrote to file', data.decode('utf-8'))
+					fw.close()
+					print("Received..")
+			except:
+				pass
+		connectionSocket.close()
