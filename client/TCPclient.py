@@ -26,15 +26,17 @@ def my_parser():
             else: 
                 option = ""
             command = "get"
-            fileName = sys.argv[2]
-            return command, fileName, option
+            # fileName = sys.argv[2]
+            serverName = sys.argv[2].split(":")[0]
+            fileName = sys.argv[2].split(":")[1]
+            return command, serverName, fileName, option
 
-serverName = "localhost"
+# serverName = "localhost"
+command, serverName, fileName, option = my_parser()
 serverPort = 12008
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName,serverPort))
 
-command, fileName, option = my_parser()
 if command==0:
     exit(0)
 else:
@@ -69,7 +71,7 @@ else:
         with open(fileName, "wb") as fw:
             while True:
                 print('Receiving...')
-                data = decrypt.decrypt(clientSocket.recv(1024))
+                data = clientSocket.recv(1024)
                 # data = f.decrypt(clientSocket.recv(1024))
                 # data = clientSocket.recv(1024)
                 if not data:

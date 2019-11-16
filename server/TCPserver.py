@@ -25,7 +25,7 @@ def filetransfer(connectionSocket, filename):
 			print("Sending...")
 			while True:
 				data = fa.read(1024)
-				data = cipher.encrypt(data)
+				# data = cipher.encrypt(data)
 				connectionSocket.send(data)
 				if not data:
 					break
