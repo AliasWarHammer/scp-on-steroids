@@ -53,15 +53,15 @@ if option == "-r":
             while True:
                 print('Receiving...')
                 # data = f.decrypt(clientSocket.recv(1024))
-                data = decrypt.decrypt(clientSocket.recv(1024))
+                data = clientSocket.recv(1024)
                 if not data:
                     break
                 fw.write(data)
             fw.close()
             print("Received\n")
-            os.system("mkdir "+fileName)
-            print("Unzipping...", "unzip ./"+fileName+".zip"+" -d "+fileName)
-            os.system("unzip ./"+fileName+".zip"+" -d "+fileName)
+            # os.system("mkdir "+fileName)
+            # print("Unzipping...", "unzip ./"+fileName+".zip"+" -d "+fileName)
+            os.system("unzip -q ./"+fileName+".zip"+" -d "+fileName)
             os.system("rm -rf "+fileName+".zip")
             print("")
     except:
